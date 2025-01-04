@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:quiz_app/components/custom_elevated_button.dart';
-import 'package:quiz_app/data/questions.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key, required this.onButtonPressed});

@@ -18,6 +18,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Widget currentScreen = const StartScreen();
+
+  void switchScreen() {
+    setState(() {
+      currentScreen = const QuizScreen();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
               colors: [Color(0xff01356B), Color(0xff0268D1)],
             ),
           ),
-          child: const QuizScreen(),
+          child: currentScreen,
         ),
       ),
     );

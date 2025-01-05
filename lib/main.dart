@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/quiz_screen.dart';
+import 'package:quiz_app/results_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 
 void main() {
@@ -32,7 +33,9 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       currentScreen = QuizScreen(
         onQuizComplete: () {
-          print('quiz complete');
+          setState(() {
+            currentScreen = const ResultsScreen();
+          });
         },
       );
     });

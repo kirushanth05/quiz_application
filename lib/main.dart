@@ -21,6 +21,22 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   dynamic currentScreen;
 
+  /*
+    
+    uploadScore(String playerID, dyanmic scores, Function(value) onScoreUpload) {
+        // send the player id and the score to the server
+        // get the response from the server
+        
+        onScoreUpload(serverResponse);
+    }
+
+    // a callback function
+    printSuccessMessage(value) {
+      print('Success');
+    }
+    uploadScore('P001', '5-3', printSuccessMessage)
+  */
+
   @override
   void initState() {
     currentScreen = StartScreen(
@@ -32,9 +48,15 @@ class _MainScreenState extends State<MainScreen> {
   void switchScreen() {
     setState(() {
       currentScreen = QuizScreen(
-        onQuizComplete: () {
+        onQuizComplete: (answers) {
           setState(() {
-            currentScreen = const ResultsScreen();
+            currentScreen = ResultsScreen(answers, () {
+              setState(() {
+                currentScreen = StartScreen(
+                  onButtonPressed: switchScreen,
+                );
+              });
+            });
           });
         },
       );

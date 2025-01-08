@@ -4,7 +4,7 @@ class QuizQuestion {
 
   QuizQuestion({required this.question, required this.answers});
 
-  List<String> shuffledAnswers() {
+  List<String> getShuffledAnswers() {
     List<String> shuffledAnswers = List.from(answers);
 
     shuffledAnswers.shuffle();

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:quiz_app/components/result.dart';
+import 'package:quiz_app/data/questions.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key});
-  
+  const ResultsScreen(this.answers, this.onReset, {super.key});
+
+  final List<String> answers;
+  final void Function() onReset;
+
   @override
   Widget build(BuildContext context) {
+    int correctAnswerCount = 0;
+    for (int i = 0; i < questions.length; i++) {
+      if (questions[i].answers[0] == answers[i]) correctAnswerCount++;
+    }
+
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.only(
@@ -27,9 +36,9 @@ class ResultsScreen extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const Text(
-              'You got 8 out of 10 questions right',
-              style: TextStyle(
+            Text(
+              'You got $correctAnswerCount out of ${questions.length} questions right',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,
               ),
@@ -37,19 +46,11 @@ class ResultsScreen extends StatelessWidget {
             const Gap(46),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.63,
-              child: const SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(
                   child: Column(
-                    children: [
-                      Result(
-                        questionIndex: 0,
-                        question:
-                            'What are the main building blocks of Flutter UIs?',
-                        correctAnswer: 'Widgets',
-                        providedAnswer: 'Components',
-                      ),
-                    ],
+                    children: _showResults(),
                   ),
                 ),
               ),
@@ -58,7 +59,7 @@ class ResultsScreen extends StatelessWidget {
             const Spacer(),
             Center(
               child: TextButton(
-                onPressed: () {},
+                onPressed: onReset,
                 child: const Text(
                   'Reset Quiz',
                   style: TextStyle(
@@ -71,5 +72,21 @@ class ResultsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _showResults() {
+    List<Widget> results = [];
+
+    for (int i = 0; i < questions.length; i++) {
+      Result result = Result(
+          questionIndex: i + 1,
+          question: questions[i].question,
+          correctAnswer: questions[i].answers[0],
+          providedAnswer: answers[i]);
+
+      results.add(result);
+    }
+
+    return results;
   }
 }

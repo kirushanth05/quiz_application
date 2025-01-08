@@ -14,7 +14,9 @@ class Result extends StatelessWidget {
   final String question;
   final String correctAnswer;
   final String providedAnswer;
-  
+
+  bool isCorrectAnswer() => correctAnswer == providedAnswer;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,13 +28,15 @@ class Result extends StatelessWidget {
             width: 27,
             height: 27,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isCorrectAnswer() ? Colors.white : Colors.red.shade300,
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(
                 child: Text(
               questionIndex.toString(),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isCorrectAnswer() ? Colors.black : Colors.white),
             )),
           ),
           const Gap(12),
@@ -52,16 +56,17 @@ class Result extends StatelessWidget {
                 const Gap(2),
                 Text(
                   correctAnswer,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Colors.green.shade300,
                     fontSize: 14,
                   ),
                 ),
                 const Gap(2),
                 Text(
                   providedAnswer,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color:
+                        isCorrectAnswer() ? Colors.white : Colors.red.shade200,
                     fontSize: 14,
                   ),
                 ),
